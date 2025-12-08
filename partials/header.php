@@ -17,9 +17,16 @@ if (!defined('NASA_API_KEY')) {
 <header>
   <div class="container header-inner">
     <div class="logo">
-      <a class="logo-text" href="/astrolystic/index.php" style="text-decoration:none;">
-  ASTROLYSTIC
+
+    <?php
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+$home = ($base === '' || $base === '/') ? '/index.php' : $base . '/index.php';
+?>
+<a class="logo" href="<?= htmlspecialchars($home) ?>">
+  <span class="logo-text">ASTROLYSTIC</span>
 </a>
+
+
 
     </div>
     <nav>

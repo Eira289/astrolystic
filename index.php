@@ -20,22 +20,20 @@ $apod = $apod_json ? json_decode($apod_json, true) : null;
 
 
 
+/// -----------------------------
+// Fetch Launches WITH CACHING (Render-safe: uses /tmp)
 // -----------------------------
-// Fetch Launches WITH CACHING
-// -----------------------------
-$cache_file = __DIR__ . '/cache_launches.json';
+$cache_file = rtrim(sys_get_temp_dir(), '/\\') . '/cache_launches.json';
 $cache_lifetime = 300; // 5 minutes
 
+$launches_json = null;
+
 if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_lifetime)) {
-    // Use cached version if fresh
     $launches_json = file_get_contents($cache_file);
 } else {
-    // Fetch live data
     $launches_json = fetch_api("https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=6");
-
-    // If the fetch worked (valid JSON), store it
     if ($launches_json && strlen($launches_json) > 10) {
-        file_put_contents($cache_file, $launches_json);
+        @file_put_contents($cache_file, $launches_json); // @ prevents warnings if something weird happens
     }
 }
 

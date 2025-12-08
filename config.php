@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
+
 // config.php
 
 // 1) Read API key from hosting environment first (Render/Railway)
